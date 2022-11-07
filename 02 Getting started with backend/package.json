@@ -1,0 +1,15 @@
+{
+  "name": "getting-started-with-backend",
+  "version": "1.0.0",
+  "description": "learning express js",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "author": "Shivanand",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "nodemon": "^2.0.20"
+  }
+}
