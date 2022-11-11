@@ -24,3 +24,36 @@ const userSchema = new Schema({
 });
 
 module.exports = mongoose.model("user", userSchema);
+
+
+
+
+// practice
+
+/* import mongoose from "mongoose";
+const {Schema} = mongoose;
+
+const UserSchema = new Schema({
+  firstname: {
+    type: String, 
+    required: true
+  },
+  lastname: {
+    type: String, 
+  },
+  email: {
+    type: String, 
+    required: true,
+    unique: true,
+
+  },
+  password: {
+    type: String, 
+    required: true
+  },
+  token: {
+    type: String, 
+  },
+});
+
+module.exports = mongoose.model("user", UserSchema) */

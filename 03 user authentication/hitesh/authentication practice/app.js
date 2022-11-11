@@ -8,6 +8,8 @@ const User = require("./models/user");
 
 // creating routes
 const app = express()
+app.use(express.json())
+app.use(express.urlencoded({ extended: true })) 
 
 app.get("/",(req, res)=>{
     res.send("database connected")
@@ -108,3 +110,70 @@ app.post("/login", async (req, res)=>{
     }
 
 })
+
+
+
+
+// practice
+/* 
+require("./config/DBconnect").DBconnect();
+const User = require("./models/user");
+const express = require("express");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
+
+// creating routes
+
+const app = express();
+
+app.get("/",(req, res)=>{
+    res.send("connected to database")
+})
+
+// register
+
+app.post("/register", async (req, res)=>{
+    try {
+        
+        // 1. taking all information
+           const {firstname, lastname, email, password} = req.body
+
+        // 2. validating
+        if(!(firstname && lastname && email && password)){
+            res.status(401).send("all fields are required")
+        }
+
+        // 3. checking if already present
+        const existingUser = await User.findOne({email: email})
+
+        if(existingUser){
+            res.send("account already exists")
+        }
+
+        // 4. encrypting the password
+
+        const encryptedPassword = await bcrypt.hash(password, 10)
+
+        // 5. storing in database
+        const user = User.create({
+            firstname,
+            lastname, 
+            email, 
+            password: encryptedPassword
+        })
+
+        // 6. create a token and sent it to frontend
+        const token = jwt.sign({
+            id: user._id,
+            email: email
+        },"secrect",{expiresIn: "2hr"})
+
+        // sending to frontend
+        user.token = token
+        user.password = null
+
+        res.status(201).json(user)
+    } catch (error) {
+        console.log(error);
+    }
+}) */
