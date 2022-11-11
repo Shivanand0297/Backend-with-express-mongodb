@@ -103,9 +103,12 @@ app.post("/login", async (req, res)=>{
         const user = await User.findOne({email})  // User.findOne({email: email})
         
         // if user doesnot exists - assingment TODO:
+        if (!user){
+            res.status(401).send("user not found")
+        }
 
         // 4. match the password- if exists
-        if (user && (await bcrypt.compare(password, user.password))){    // first password is what user has just entered and second one is from database to compare
+        if (user && (await bcrypt.compare(password, user.password))){    // first password is what user has just entered and second one is from database user{} object to compare
             
             const token = jwt.sign({id: user._id, email}, "shhhh", {expiresIn: "2h"})        // this secret and expiresIn should be same so it is better to store it in some variable
 
