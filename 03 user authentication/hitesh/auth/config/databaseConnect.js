@@ -3,7 +3,7 @@
 const mongoose = require("mongoose")
 // this connection might be required at the start of the application so we will export this function so that anybody can use this method
 
-const MONGODB_URL = "Some String"
+const MONGODB_URL = process.env.MONGODB_URL
 
 exports.dbConnect = () =>{
     mongoose.connect(MONGODB_URL, {

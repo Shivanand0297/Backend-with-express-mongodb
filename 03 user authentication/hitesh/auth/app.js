@@ -1,3 +1,6 @@
+// getting the db url
+require('dotenv').config()
+
 //TODO: 1 connecting database at the starting of the app which will start my application
 require("./config/databaseConnect").dbConnect()
 
@@ -14,9 +17,16 @@ const bcrypt = require("bcryptjs")
 const User = require("./models/user")   //"User" good practice
 // const user = require("./models/user")
 
+// for accessing user cookies
+const cookieParser = require('cookie-parser')
+
+// custom middleware
+const Auth = require("./middleware/auth")
+
 const app = express()
 app.use(express.json()) // will come back to this later on, this is a middleware, whenever we want to extrate some inforamtion from req.body we have to use app.use(express.json())
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded 
+app.use(cookieParser())     // TODO: automatically takes the cookies from the user browser and inject it into the req object so that for 1000no of files we dont need to import cookie-parser again and again for example in auth.js file we don't need to import cookie parser again
 
 // creating route
 app.get("/",(req, res) => {
@@ -134,3 +144,56 @@ app.post("/login", async (req, res)=>{
         console.log(error);
     }
 })
+
+// /dashboard
+
+// assuming the user is successfully logged in
+//varify the cookies and allow to login to dashboard
+
+app.get("/dashboard", (req, res, Auth)=>{      //Auth is a middleware
+/* 
+    // we don't have anything to access cookies for that we need cookies parser
+    console.log("req.cookies:",req.cookies);
+    const token = req.cookies.token     //since we saved cookies with the key named token
+    // also const {token, something} = req.cookies
+    //  const token = req.cookies
+
+    // checking if token is missing
+    if (!token) {
+        res.status(403).send("access denied")
+    }
+
+    // if present varify the token by jwt since it takes time we will run it in the try catch block
+    try {
+        const decodeToken = jwt.verify(token, "shhhh")  // we will get {id: user._id, email} object
+        console.log("decodeToken:", decodeToken);
+        //creating another property in the req object as user and adding decodeToken value
+        req.user = decodeToken;
+
+        // extract id from the decodeToken and query the db (will do in the maga project)
+    } catch (error) {   
+        console.log(error);
+    } */
+    res.send("welcome to dashboard")
+})
+
+//we need to check for the token for every route
+/* 
+app.get("/settings",(req, res)=>{
+    
+})
+app.get("/about",(req, res)=>{
+
+})
+so for this we need middleware 
+*/
+
+app.get("/profile", (req, res, Auth)=>{
+    //access to req.user = id, email
+
+    // based on id query the database and get all the information of user - findOne({id})
+
+    // send a json response with all data
+})
+
+module.exports = app
