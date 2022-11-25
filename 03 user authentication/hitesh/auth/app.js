@@ -24,8 +24,8 @@ const cookieParser = require('cookie-parser')
 const Auth = require("./middleware/auth")
 
 const app = express()
-app.use(express.json()) // will come back to this later on, this is a middleware, whenever we want to extrate some inforamtion from req.body we have to use app.use(express.json())
-app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded 
+app.use(express.json()) // will come back to this later on, this is a middleware, whenever we want to extrate some inforamtion from req.body we have to use app.use(express.json()), some data is coming in the json so we need to accept it as middleware
+app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded for getting values from form
 app.use(cookieParser())     // TODO: automatically takes the cookies from the user browser and inject it into the req object so that for 1000no of files we dont need to import cookie-parser again and again for example in auth.js file we don't need to import cookie parser again
 
 // creating route
