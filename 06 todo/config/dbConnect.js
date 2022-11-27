@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
-
-const connectToDb = () =>{
-    mongoose.connect(process.env.MONGO_URI, {
+const {MONGO_URI} = process.env
+exports.connectToDb = () =>{
+    mongoose.connect(MONGO_URI, {
         useNewUrlParser: true,
         useUnifiedTopology: true
     })
@@ -14,5 +14,4 @@ const connectToDb = () =>{
     })
 }
 
-module.exports = connectToDb
 // after doing changes in the .env file restart the server
