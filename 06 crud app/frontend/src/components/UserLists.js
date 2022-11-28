@@ -1,6 +1,24 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 
 const UserLists = () => {
+
+  const [ userList, setUserList ] = useState("")
+
+  const fetchUserData = async () =>{
+    const resp = await axios.get("/getUsers")
+    console.log(resp);
+
+    // if no users are there then dont set the values
+    if (resp.data.users.length > 0){
+      setUserList(resp.data.users)
+    }
+  }
+
+  useEffect(()=>{
+    fetchUserData()
+  }, [])
+
   return (
     <section className="text-gray-600 body-font">
       <div className="container px-5 py-24 mx-auto">
@@ -28,9 +46,10 @@ const UserLists = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td className="px-4 py-3">One</td>
-                <td className="px-4 py-3">Two</td>
+              {userList && userList.map(user=>(
+                <tr>
+                <td className="px-4 py-3">{user.name}</td>
+                <td className="px-4 py-3">{user.email}</td>
                 <td className="px-4 py-3">
                   <button className="hover:text-green-500">Edit</button>
                 </td>
@@ -38,6 +57,7 @@ const UserLists = () => {
                   <button className="hover:text-red-500">Delete</button>
                 </td>
               </tr>
+              ))}
             </tbody>
           </table>
         </div>

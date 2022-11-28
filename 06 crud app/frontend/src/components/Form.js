@@ -15,12 +15,18 @@ const Form = () => {
     // to transfer data from frontend to backend we need axios
     // const res = await axios.post("http://localhost:4000/createUser", data)  // one way is to write full url all the time and second is to make a proxy in the package.json
 
-    //  "proxy": "http://localhost:4000",
+    //  "proxy": "http://127.0.0.1:4000",
+   
 
-    const res = await axios.post("http://localhost:4000/createUser", data); // proxy way
-    console.log(res);
-    console.log(userName);
-    console.log(email);
+    try {
+      const res = await axios.post("http://127.0.0.1:4000/createUser", data); // proxy way
+      console.log(res);
+      console.log(userName);
+      console.log(email);
+    } catch (error) {
+      console.log(error);
+      console.log(error.message);
+    }
   };
 
   const handleSubmit = (e) => {
