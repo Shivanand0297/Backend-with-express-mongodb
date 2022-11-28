@@ -6,8 +6,8 @@ const UserLists = () => {
   const [ userList, setUserList ] = useState("")
 
   const fetchUserData = async () =>{
-    const resp = await axios.get("http://127.0.0.1:4000/getUsers")
-    console.log(resp);
+    const resp = await axios.get("/getUsers")
+    // console.log(resp);
 
     // if no users are there then dont set the values
     if (resp.data.users.length > 0){
@@ -15,10 +15,32 @@ const UserLists = () => {
     }
   }
 
+  // to load the already present data at reload
   useEffect(()=>{
     fetchUserData()
-  }, [])
+  }, [userList])
 
+  // to handle edit
+   const handleEdit = async (user) =>{
+      const userName = prompt("Enter new user name")
+      const userEmail = prompt("Enter new user email")
+
+      if(!userName || !userEmail){
+        alert("both email and password are required")
+      }else{
+        const res = await axios.put(`/editUser/${user._id}`, {
+          name: userName, 
+          email: userEmail,
+        })
+        console.log(res);
+      }
+      
+   }
+
+  // handle edlete 
+  const handleDelete = async (id) =>{
+    await axios.delete(`/deleteUser/${id}`)
+  }
   return (
     <section className="text-gray-600 body-font">
       <div className="container px-5 py-24 mx-auto">
@@ -51,10 +73,16 @@ const UserLists = () => {
                 <td className="px-4 py-3">{user.name}</td>
                 <td className="px-4 py-3">{user.email}</td>
                 <td className="px-4 py-3">
-                  <button className="hover:text-green-500">Edit</button>
+                  <button 
+                  className="hover:text-green-500"
+                  onClick={()=>{handleEdit(user)}}
+                  >Edit</button>
                 </td>
                 <td className="px-4 py-3 text-lg text-gray-900">
-                  <button className="hover:text-red-500">Delete</button>
+                  <button 
+                  className="hover:text-red-500"
+                  onClick={()=>{handleDelete(user._id)}}
+                  >Delete</button>
                 </td>
               </tr>
               ))}
