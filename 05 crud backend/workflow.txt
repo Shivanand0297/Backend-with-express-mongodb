@@ -1,0 +1,17 @@
+Todo Schema
+ - title (String)
+ - tasks [(String)]
+
+controllers
+
+- createTodoController
+
+- getTodosController
+- getTodoController
+- deleteTodoController
+
+- createTaskTodoController
+- deleteTaskTodoController
+
+- editTodoController
+- editTaskController
