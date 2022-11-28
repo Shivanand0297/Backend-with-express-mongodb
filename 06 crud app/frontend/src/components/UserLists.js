@@ -6,7 +6,7 @@ const UserLists = () => {
   const [ userList, setUserList ] = useState("")
 
   const fetchUserData = async () =>{
-    const resp = await axios.get("/getUsers")
+    const resp = await axios.get("http://127.0.0.1:4000/getUsers")
     console.log(resp);
 
     // if no users are there then dont set the values
