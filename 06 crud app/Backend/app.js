@@ -5,9 +5,7 @@ require("./config/dbConnect").connectToDb()
 const userRoutes = require("./routes/userRoutes")
 
 const corsOptions ={
-    origin:'http://127.0.0.1:3000', 
-    credentials:true,            //access-control-allow-credentials:true
-    optionSuccessStatus:200
+    origin:'http://localhost:3000'
 }
 
 const app = express()
