@@ -1,9 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 
 const Form = () => {
+  const [userName, setUserName] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const submitData = {
+      name: userName, 
+      email: userEmail,
+    }
+    try {
+      const resp = await axios.post("/createUser", submitData)
+    console.log(resp);
+    } catch (error) {
+      console.log(error.message);
+    }
+    setUserName("")
+    setUserEmail("")
+  };
+
   return (
     <div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <section className="text-gray-600 body-font relative">
           <div className="container px-5 py-8 mx-auto">
             <div className="flex flex-col text-center w-full mb-6">
@@ -25,6 +46,8 @@ const Form = () => {
                       type="text"
                       id="name"
                       name="name"
+                      value={userName}
+                      onChange={(e) => setUserName(e.target.value)}
                       className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                     />
                   </div>
@@ -41,6 +64,8 @@ const Form = () => {
                       type="email"
                       id="email"
                       name="email"
+                      value={userEmail}
+                      onChange={(e) => setUserEmail(e.target.value)}
                       className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                     />
                   </div>
