@@ -8,7 +8,8 @@ const express = require("express")
 const routes = require("./routes/userRoutes")
 
 const corsOptions = {
-    origin: "http://127.0.0.1:6000"
+    origin:"http://localhost:3000"
+
 }
 
 
