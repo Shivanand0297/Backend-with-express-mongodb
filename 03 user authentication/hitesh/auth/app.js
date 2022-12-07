@@ -150,7 +150,7 @@ app.post("/login", async (req, res)=>{
 // assuming the user is successfully logged in
 //varify the cookies and allow to login to dashboard
 
-app.get("/dashboard", (req, res, Auth)=>{      //Auth is a middleware
+app.get("/dashboard", Auth, (req, res)=>{      //Auth is a middleware
 /* 
     // we don't have anything to access cookies for that we need cookies parser
     console.log("req.cookies:",req.cookies);
@@ -188,7 +188,7 @@ app.get("/about",(req, res)=>{
 so for this we need middleware 
 */
 
-app.get("/profile", (req, res, Auth)=>{
+app.get("/profile", Auth, (req, res )=>{
     //access to req.user = id, email
 
     // based on id query the database and get all the information of user - findOne({id})
