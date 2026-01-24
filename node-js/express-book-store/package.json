@@ -1,0 +1,24 @@
+{
+  "name": "express-book-store",
+  "version": "1.0.0",
+  "description": "Basic crud backend for book store",
+  "license": "ISC",
+  "author": "shivanand",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --watch index.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "drizzle-orm": "^0.45.1",
+    "express": "^5.2.1",
+    "pg": "^8.17.2"
+  },
+  "devDependencies": {
+    "@types/node": "^25.0.3",
+    "@types/pg": "^8.16.0",
+    "drizzle-kit": "^0.31.8",
+    "tsx": "^4.21.0"
+  }
+}
