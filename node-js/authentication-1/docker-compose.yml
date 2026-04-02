@@ -1,0 +1,10 @@
+services:
+  postgres:
+    image: postgres:18
+    ports:
+    # host-to-container port mapping
+      - 5434:5432
+    environment:
+      POSTGRES_DB: mybook
+      POSTGRES_USER: shiva
+      POSTGRES_PASSWORD: mypassword
