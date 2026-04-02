@@ -1,34 +1,15 @@
-import express from "express";
-import db from "../src/index.js";
-import { sessionTable, usersTable } from "../src/db/schema.js";
 import { eq } from "drizzle-orm";
+import express from "express";
 import { createHmac, randomBytes } from "node:crypto";
+import { sessionTable, usersTable } from "../src/db/schema.js";
+import db from "../src/index.js";
 
 const userRouter = express.Router();
 
 userRouter.get("/", async (req, res) => {
-  const sessionId = req.headers["x-session-id"];
-  console.log(sessionId);
+  const user = req.user;
 
-  if (!sessionId) {
-    return res.status(401).json({
-      success: false,
-      message: "Not logged in",
-    });
-  }
-
-  const [data] = await db
-    .select({
-      id: sessionTable.id,
-      userId: usersTable.id,
-      name: usersTable.name,
-      email: usersTable.email,
-    })
-    .from(sessionTable)
-    .rightJoin(usersTable, eq(usersTable.id, sessionTable.userId))
-    .where((table) => eq(sessionId, table.id));
-
-  if (!data) {
+  if (!user) {
     return res.status(401).json({
       success: false,
       message: "Invalid session id",
@@ -37,7 +18,7 @@ userRouter.get("/", async (req, res) => {
 
   return res.status(200).json({
     success: true,
-    data,
+    data: user,
   });
 });
 
